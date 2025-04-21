@@ -19,11 +19,7 @@ function getClientsFromCookie(): { email: string; name: string }[] {
   }
 }
 
-// Base64 encode (handles Unicode)
-function b64encode(str: string) {
-  if (typeof btoa !== "undefined") return btoa(unescape(encodeURIComponent(str)));
-  return Buffer.from(str, "utf8").toString("base64");
-}
+
 
 const sendZapierRequest = async (email: string) => {
   let clipboardText = "";
@@ -33,7 +29,7 @@ const sendZapierRequest = async (email: string) => {
     if (!clipboardText) {
       toast({
         title: "Clipboard is empty",
-        description: "Please copy something to your clipboard first.",
+        description: "Please copy a code to your clipboard first.",
         variant: "destructive",
       });
       return;
@@ -47,10 +43,10 @@ const sendZapierRequest = async (email: string) => {
     return;
   }
 
-  const encoded = b64encode(clipboardText);
+  
 
   // Compose Zapier request URL
-  const url = `https://hooks.zapier.com/hooks/catch/22604395/2xzt642/?user=${encodeURIComponent(email)}&b64=${encodeURIComponent(encoded)}`;
+  const url = `https://hooks.zapier.com/hooks/catch/22604395/2xzt642/?user=${encodeURIComponent(email)}&b64=${encodeURIComponent(clipboardText)}`;
 
   try {
     await fetch(url, { method: "GET", mode: "no-cors" });
