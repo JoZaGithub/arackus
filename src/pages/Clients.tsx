@@ -1,10 +1,11 @@
 
 import { useNavigate } from "react-router-dom";
-import { Plus } from "lucide-react";
+import { Plus, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const clients = [
-  { id: 1, name: "Acme Corp", message: "", receiver: "" },
-  { id: 2, name: "Globex", message: "", receiver: "" }
+  { id: 1, name: "Acme Corp" },
+  { id: 2, name: "Globex" }
 ];
 
 const Clients = () => {
@@ -32,18 +33,10 @@ const Clients = () => {
               className="bg-transparent text-lg flex-1 outline-none"
               style={{ minWidth: 100 }}
             />
-            <input
-              type="text"
-              placeholder="Message"
-              className="bg-muted/50 border rounded-md px-3 py-2 mx-2 flex-1 outline-none"
-              style={{ minWidth: 120 }}
-            />
-            <input
-              type="text"
-              placeholder="Receiver"
-              className="bg-muted/50 border rounded-md px-3 py-2 flex-1 outline-none"
-              style={{ minWidth: 100 }}
-            />
+            <Button variant="default" size="sm" className="flex items-center gap-2">
+              <Send size={18} />
+              Send
+            </Button>
           </div>
         ))}
       </div>

@@ -1,6 +1,6 @@
 
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { User, UserPlus, Edit, Send, Folder } from "lucide-react";
+import { User, UserPlus, Edit, MessageSquare } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import React from "react";
 
@@ -8,7 +8,7 @@ const tabs = [
   { title: "Clients", url: "/clients", icon: User },
   { title: "Add Client", url: "/add-client", icon: UserPlus },
   { title: "Gist", url: "/gist", icon: Edit },
-  { title: "Send", url: "/send", icon: Send },
+  { title: "Message", url: "/message", icon: MessageSquare },
 ];
 
 export function AppSidebar() {
