@@ -1,13 +1,20 @@
 
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
-import { User, UserPlus, Edit, MessageSquare } from "lucide-react";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
+import { User, UserPlus, MessageSquare } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import React from "react";
 
 const tabs = [
   { title: "Clients", url: "/clients", icon: User },
   { title: "Add Client", url: "/add-client", icon: UserPlus },
-  { title: "Gist", url: "/gist", icon: Edit },
   { title: "Message", url: "/message", icon: MessageSquare },
 ];
 
@@ -16,7 +23,10 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent className="h-full bg-sidebar glass px-0">
-        <SidebarGroup className="mt-6">
+        <div className="p-6 pb-2">
+          <h1 className="text-2xl font-extrabold text-gradient-primary select-none">Arackus</h1>
+        </div>
+        <SidebarGroup className="mt-2">
           <SidebarGroupContent>
             <SidebarMenu>
               {tabs.map((tab) => {
