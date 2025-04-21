@@ -18,11 +18,6 @@ function getClientsFromCookie(): { email: string; name: string }[] {
   }
 }
 
-function saveClientsToCookie(clients: { email: string; name: string }[]) {
-  document.cookie =
-    "clients=" + encodeURIComponent(JSON.stringify(clients)) + "; path=/; max-age=31536000";
-}
-
 const Clients = () => {
   const navigate = useNavigate();
   const [clients, setClients] = useState<{ email: string; name: string }[]>([]);
@@ -68,7 +63,12 @@ const Clients = () => {
               style={{ minWidth: 180 }}
               readOnly
             />
-            <Button variant="default" size="sm" className="flex items-center gap-2" disabled>
+            <Button 
+              variant="default" 
+              size="sm" 
+              className="flex items-center gap-2"
+              onClick={() => navigate("/message", { state: { client } })}
+            >
               <Send size={18} />
               Send
             </Button>
