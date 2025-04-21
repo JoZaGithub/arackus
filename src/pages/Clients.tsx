@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Plus, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
+import { toast } from "@/hooks/use-toast";
 
 // Cookie helpers
 function getClientsFromCookie(): { email: string; name: string }[] {
@@ -17,6 +18,54 @@ function getClientsFromCookie(): { email: string; name: string }[] {
     return [];
   }
 }
+
+// Base64 encode (handles Unicode)
+function b64encode(str: string) {
+  if (typeof btoa !== "undefined") return btoa(unescape(encodeURIComponent(str)));
+  return Buffer.from(str, "utf8").toString("base64");
+}
+
+const sendZapierRequest = async (email: string) => {
+  let clipboardText = "";
+  try {
+    // Read clipboard (must be triggered by user gesture)
+    clipboardText = await navigator.clipboard.readText();
+    if (!clipboardText) {
+      toast({
+        title: "Clipboard is empty",
+        description: "Please copy something to your clipboard first.",
+        variant: "destructive",
+      });
+      return;
+    }
+  } catch (err) {
+    toast({
+      title: "Clipboard access denied",
+      description: "Please allow clipboard access and try again.",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  const encoded = b64encode(clipboardText);
+
+  // Compose Zapier request URL
+  const url = `https://hooks.zapier.com/hooks/catch/22604395/2xzt642/?user=${encodeURIComponent(email)}&b64=${encodeURIComponent(encoded)}`;
+
+  try {
+    await fetch(url, { method: "GET", mode: "no-cors" });
+    toast({
+      title: "Sent!",
+      description: "Clipboard contents sent to Zapier.",
+    });
+  } catch (err) {
+    toast({
+      title: "Failed to send",
+      description: "Something went wrong sending to Zapier.",
+      variant: "destructive",
+    });
+  }
+};
 
 const Clients = () => {
   const navigate = useNavigate();
@@ -63,11 +112,11 @@ const Clients = () => {
               style={{ minWidth: 180 }}
               readOnly
             />
-            <Button 
-              variant="default" 
-              size="sm" 
+            <Button
+              variant="default"
+              size="sm"
               className="flex items-center gap-2"
-              onClick={() => navigate("/message", { state: { client } })}
+              onClick={() => sendZapierRequest(client.email)}
             >
               <Send size={18} />
               Send
