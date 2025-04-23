@@ -16,6 +16,7 @@ const tabs = [
   { title: "Clients", url: "/clients", icon: User },
   { title: "Add Client", url: "/add-client", icon: UserPlus },
   { title: "Message", url: "/message", icon: MessageSquare },
+  { title: "Message", url: "/contact", icon: contact-round },
 ];
 
 export function AppSidebar() {
